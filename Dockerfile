@@ -19,15 +19,13 @@ RUN wget https://download.blender.org/release/Blender4.3/blender-4.3.0-linux-x64
     mv blender-4.3.0-linux-x64 /opt/blender && \
     rm blender.tar.xz
 
-RUN pip3 install fastapi uvicorn
-
-COPY ./web_app /app/web_app
+RUN pip3 install --no-cache-dir fastapi uvicorn
 
 # Указываем рабочую директорию для FastAPI
-WORKDIR /app/web_app
+WORKDIR /app
 
 # Устанавливаем переменную окружения для Blender
 ENV PATH="/opt/blender:$PATH"
 
-# Команда для запуска FastAPI (по умолчанию)
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
