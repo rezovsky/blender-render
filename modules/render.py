@@ -14,10 +14,10 @@ class Render():
         command = [
             "blender", 
             "-b", self.file.path, 
-            "-o", f"output/animation_{self.file.output_name}/{self.file.output_name}_#####.png",
+            "-o", f"output/{self.file.output_name}.png", 
             "-F", "PNG", 
-            "-a" 
-        ]
+            "-f", "1"
+            ]
         
         result = subprocess.run(command, capture_output=True, text=True)
         
@@ -30,9 +30,9 @@ class Render():
             command = [
                 "blender", 
                 "-b", self.file.path, 
-                "-o", f"output/{self.file.output_name}_#####.png",  # Шаблон для имен файлов с кадром
+                "-o", f"output/animation_{self.file.output_name}/{self.file.output_name}_#####.png",
                 "-F", "PNG", 
-                "-a"  # Рендер всех кадров, которые установлены в самой сцене
+                "-a" 
             ]
             
             result = subprocess.run(command, capture_output=True, text=True)
