@@ -13,6 +13,7 @@ class Files():
         blend_files = [
                 {
                     "name": file,
+                    "output_name": f"render_{os.path.splitext(file)[0]}",
                     "path": os.path.join(self.path, file),
                     "size": self.size_format(os.path.getsize(os.path.join(self.path, file)))
                 }
