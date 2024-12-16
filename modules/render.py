@@ -1,7 +1,7 @@
 import subprocess
 
 class Render():
-    def __init__(self, file_name: str, output_file: str):
+    def __init__(self, file: str, output_file: str):
         self.file_name = file_name
         self.output_path = output_path
         
