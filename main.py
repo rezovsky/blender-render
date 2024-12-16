@@ -4,6 +4,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 import subprocess
 import os
+from modules.files import Files
 
 app = FastAPI()
 
@@ -37,13 +38,8 @@ async def read_root():
 
 @app.get("/find_files")
 async def find_files():
-    folder_path = "blend_files"
-    
-    files = os.listdir(folder_path)
-    
-    blend_files = [file for file in files if file.endswith('.blend')]
-    
-    return {"files": blend_files}
+    files = Files("blend_files")
+    return await files.find_files()
 
 @app.get("/render/")
 async def render_scene():
