@@ -12,6 +12,8 @@ from routes.tasks import router as tasks_router
 from modules.db import init_db
 from modules.queue_manager import process_queue
 
+print("✅ Сервер стартует из:", os.getcwd())
+
 # Настройка логирования
 logging.basicConfig(
     level=logging.DEBUG,
