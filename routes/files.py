@@ -42,7 +42,7 @@ def calculate_file_hash(file_path: str) -> str:
             hasher.update(chunk)
     return hasher.hexdigest()
 
-@router.get("/file_info/")
+@router.get("/file_info")
 def get_blend_file_info(
     file_path: str = Query(..., description="Путь к .blend файлу"),
     db: Session = Depends(get_db)
