@@ -20,7 +20,10 @@ if errorlevel 1 (
     powershell -Command "Invoke-WebRequest -Uri https://nodejs.org/dist/v20.11.0/node-v20.11.0-x64.msi -OutFile node-installer.msi"
     start /wait msiexec /i node-installer.msi /quiet /norestart
     del node-installer.msi
-    echo Node.js установлен. Продолжаем...
+    echo Node.js установлен. Перезапускаем скрипт для обновления PATH...
+    timeout /t 2 >nul
+    start "" "%~f0"
+    exit /b
 ) else (
     echo Node.js уже установлен.
 )
@@ -39,5 +42,5 @@ call npm install
 call npm run build
 cd ..
 
-echo === Всё готово! Установка завершена ===
+echo === Всё готово! Установка завершена. ===
 pause
