@@ -55,6 +55,10 @@ if not os.path.exists(previews_dir):
     os.makedirs(previews_dir)
 app.mount("/previews", StaticFiles(directory=previews_dir), name="previews")
 
+@app.get("/debug_previews")
+async def debug_previews():
+    return {"mounted_previews_dir": previews_dir, "files": os.listdir(previews_dir)}
+
 # Фоновый запуск очереди
 def startup_event():
     logger.info("Запуск фонового процесса управления очередью")
@@ -64,8 +68,3 @@ def startup_event():
 @app.on_event("startup")
 async def startup():
     startup_event()
-
-
-@app.get("/debug_previews")
-async def debug_previews():
-    return {"mounted_previews_dir": previews_dir, "files": os.listdir(previews_dir)}
