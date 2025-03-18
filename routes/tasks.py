@@ -39,7 +39,7 @@ def add_task(task: TaskCreate, db: Session = Depends(get_db)):
     return new_task
 
 
-@router.get("/tasks/queue/", response_model=List[TaskResponse])
+@router.get("/tasks/queue", response_model=List[TaskResponse])
 def get_task_queue(db: Session = Depends(get_db)):
     tasks = (
         db.query(Task)
