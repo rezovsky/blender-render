@@ -33,14 +33,30 @@ python -m venv venv
 
 echo === Активация виртуального окружения и установка Python-зависимостей ===
 call venv\Scripts\activate
-pip install --upgrade pip
+call venv\Scripts\python.exe -m pip install --upgrade pip
 pip install -r requirements.txt
 
-echo === Установка frontend-зависимостей и сборка фронтенда ===
-cd web
-call npm install
-call npm run build
-cd ..
+echo === Проверка и установка frontend-зависимостей ===
+if exist web\package.json (
+    cd web
+    echo Устанавливаем npm зависимости...
+    call npm install
+
+    echo Проверяем наличие @vue/cli-service...
+    call npm list @vue/cli-service >nul 2>&1
+    if errorlevel 1 (
+        echo @vue/cli-service не найден. Устанавливаем локально...
+        call npm install @vue/cli-service --save-dev
+    ) else (
+        echo @vue/cli-service уже установлен.
+    )
+
+    echo === Сборка фронтенда ===
+    call npm run build
+    cd ..
+) else (
+    echo Папка web или package.json не найдены. Пропускаем сборку фронтенда.
+)
 
 echo === Всё готово! Установка завершена. ===
 pause
