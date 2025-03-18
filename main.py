@@ -12,8 +12,6 @@ from routes.tasks import router as tasks_router
 from modules.db import init_db
 from modules.queue_manager import process_queue
 
-print("✅ Сервер стартует из:", os.getcwd())
-
 # Настройка логирования
 logging.basicConfig(
     level=logging.DEBUG,
@@ -47,16 +45,13 @@ app.include_router(folder_router, prefix="/api")
 app.include_router(browser_router, prefix="/api")
 app.include_router(tasks_router, prefix="/api")
 
-# Подключаем статику из сборки Vite
-static_directory = os.path.join(BASE_DIR, "web", "dist")
-app.mount("/", StaticFiles(directory=static_directory, html=True), name="static")
-
 # Подключаем папку для превью рендеров
 previews_dir = os.path.join(BASE_DIR, "previews")
 if not os.path.exists(previews_dir):
     os.makedirs(previews_dir)
 app.mount("/previews", StaticFiles(directory=previews_dir), name="previews")
 
+# Эндпоинт для отладки
 @app.get("/debug_previews")
 async def debug_previews():
     return {"mounted_previews_dir": previews_dir, "files": os.listdir(previews_dir)}
@@ -70,3 +65,7 @@ def startup_event():
 @app.on_event("startup")
 async def startup():
     startup_event()
+
+# Подключаем статику из сборки Vite — в САМОМ КОНЦЕ!
+static_directory = os.path.join(BASE_DIR, "web", "dist")
+app.mount("/", StaticFiles(directory=static_directory, html=True), name="static")
