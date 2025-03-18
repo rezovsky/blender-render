@@ -23,9 +23,7 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:3000"  # если фронт в dev режиме на Vite
-]
+origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
