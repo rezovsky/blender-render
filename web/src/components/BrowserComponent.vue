@@ -78,7 +78,7 @@ const loadProjectTree = async () => {
 
 const startCyclicalScan = async () => {
   try {
-    const response = await apiRequest("POST", "/start_cyclical_scan/");
+    const response = await apiRequest("POST", "/start_cyclical_scan");
     console.log(response);
 
   } catch (error) {
