@@ -2,7 +2,7 @@
 import os
 import time
 import hashlib
-import multiprocessing
+import threading
 from fastapi import APIRouter, Query, HTTPException
 from pathlib import Path
 from typing import List, Dict, Union, Optional
@@ -152,17 +152,12 @@ scanner_process = None
 
 @router.post("/start_cyclical_scan")
 def start_cyclical_scan():
-    """
-    Запускает процесс циклического сканирования (если не запущен).
-    Если запущен — возвращает соответствующее сообщение.
-    """
     global scanner_process
 
     if scanner_process is not None and scanner_process.is_alive():
         return {"status": "Сканирование уже запущено"}
 
-    # Создаём отдельный процесс
-    scanner_process = multiprocessing.Process(target=cyclical_scanning, daemon=True)
+    scanner_process = threading.Thread(target=cyclical_scanning, daemon=True)
     scanner_process.start()
 
     return {"status": "Сканирование запущено"}
