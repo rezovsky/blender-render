@@ -36,27 +36,18 @@ call venv\Scripts\activate
 call venv\Scripts\python.exe -m pip install --upgrade pip
 pip install -r requirements.txt
 
-echo === Проверка и установка frontend-зависимостей ===
+echo === Установка frontend-зависимостей и сборка Vite фронтенда ===
 if exist web\package.json (
     cd web
     echo Устанавливаем npm зависимости...
     call npm install
 
-    echo Проверяем наличие @vue/cli-service...
-    call npm list @vue/cli-service >nul 2>&1
-    if errorlevel 1 (
-        echo @vue/cli-service не найден. Устанавливаем локально...
-        call npm install @vue/cli-service --save-dev
-    ) else (
-        echo @vue/cli-service уже установлен.
-    )
-
-    echo === Сборка фронтенда ===
+    echo === Сборка фронтенда через Vite ===
     call npm run build
     cd ..
 ) else (
     echo Папка web или package.json не найдены. Пропускаем сборку фронтенда.
 )
 
-echo === Всё готово! Установка завершена. ===
+echo === Всё готово! Установка и сборка завершены. ===
 pause
