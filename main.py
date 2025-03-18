@@ -64,3 +64,8 @@ def startup_event():
 @app.on_event("startup")
 async def startup():
     startup_event()
+
+
+@app.get("/debug_previews")
+async def debug_previews():
+    return {"mounted_previews_dir": previews_dir, "files": os.listdir(previews_dir)}
