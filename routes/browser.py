@@ -95,7 +95,7 @@ def get_or_create_folder_structure(db: Session, path: Path, mask: Optional[str])
         return tree_data
 
 # --------- Роут для получения дерева папок ---------
-@router.get("/browser_tree/")
+@router.get("/browser_tree")
 def folder_tree(
     path: str = Query(..., title="Folder Path"),
     mask: Optional[str] = Query(None, title="File Mask", description="Фильтрация по расширению (например, '*.blend' или 'blend')")
@@ -150,7 +150,7 @@ def cyclical_scanning():
 # --------- Глобальная переменная для хранения ссылки на процесс сканирования ---------
 scanner_process = None
 
-@router.post("/start_cyclical_scan/")
+@router.post("/start_cyclical_scan")
 def start_cyclical_scan():
     """
     Запускает процесс циклического сканирования (если не запущен).
