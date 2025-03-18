@@ -140,7 +140,7 @@ async function addTask() {
   console.log("🚀 Отправка задачи:", task);
 
   try {
-    const response = await apiRequest("POST", "/tasks/add/", task);
+    const response = await apiRequest("POST", "/tasks/add", task);
     console.log("✅ Задача успешно добавлена:", response);
     closeDialog();
   } catch (error) {
@@ -245,7 +245,7 @@ async function createNewFolder() {
 
   try {
     newFolderName.value = "";
-    await apiRequest("POST", "/create_folder/", { path: newFolderPath });
+    await apiRequest("POST", "/create_folder", { path: newFolderPath });
 
     console.log("Папка успешно создана, обновляем дерево...");
 

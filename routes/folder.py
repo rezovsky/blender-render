@@ -50,7 +50,7 @@ def get_folder_structure(path: Path, mask: Optional[str] = None) -> List[Dict[st
 
     return items
 
-@router.get("/folder_tree/")
+@router.get("/folder_tree")
 def folder_tree(
     path: str = Query(..., title="Folder Path"),
     mask: Optional[str] = Query(None, title="File Mask", description="Filter files by extension (e.g., '*.blend' or 'blend')"),
@@ -63,7 +63,7 @@ def folder_tree(
     tree_data = get_folder_structure(folder_path, mask)
     return tree_data
 
-@router.post("/create_folder/")
+@router.post("/create_folder")
 def create_folder(request: CreateFolderRequest):
     """Создаёт папку и возвращает путь в нужном формате."""
     folder_path = Path(request.path)
